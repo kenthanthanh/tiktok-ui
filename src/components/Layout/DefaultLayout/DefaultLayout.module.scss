@@ -4,9 +4,8 @@
     align-items: center;
 }
 .container{
-    width:var(--default-layout-width);
+    width: var(--default-layout-width,1150px);
     display: flex;
-
 }
 .content{
     flex: 1;
