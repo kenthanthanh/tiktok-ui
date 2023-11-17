@@ -5,7 +5,7 @@
 --primary: #fe2c55;
 --black: #000;
 --white: #fff;
---text-color: #333;
+--text-color: #161823;
 
 
 
@@ -47,6 +47,11 @@ a[href] {
     text-decoration: none;
 }
 
+// Embed font
+// @font-face {
+//     font-family: "IBM Plex Sans", TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;;
+//     src: url(/src/assets/font/bold.har);
+// }
 // Custom Tippy 
 body{
 

@@ -30,6 +30,7 @@ import images from '~/assets/img';
 import styles from './Header.module.scss';
 import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
+import Image from '~/components/Image'
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
@@ -170,7 +171,7 @@ function Header() {
                     )}
                     <Menu items={{currentUser}? userMenu: MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 src="https://images.unsplash.com/photo-1699903577109-b9072c4b87b4?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                                 className={cx('user-avatar')}
                                 alt="Ken Thần Thánh"
