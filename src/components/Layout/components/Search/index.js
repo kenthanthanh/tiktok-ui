@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { useDebounce } from '~/components/hooks';
 
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,34 +15,33 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-const [showResult, setShowResult] = useState(true);
-const [loading, setLoading] = useState(false);
-
+    const [showResult, setShowResult] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const debounce = useDebounce(searchValue, 500);
 
     const inputRef = useRef();
 
+
     useEffect(() => {
-        // Call API 
-        if(!searchValue.trim())
-        {
-setSearchResult([])
-            return
+        // Call API
+        if (!debounce.trim()) {
+            setSearchResult([]);
+            return;
         }
-        setLoading(true)
+        setLoading(true);
 
-
-       fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-       .then(res => res.json())
-       .then(res => {
-        setSearchResult(res.data)
-        setLoading(false)
-       })
-       .catch(() => setLoading(false))
-    }, [searchValue]);
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounce)}&type=less`)
+            .then((res) => res.json())
+            .then((res) => {
+                setSearchResult(res.data);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
+    }, [debounce]);
 
     const handleHideResult = () => {
-        setShowResult(false)
-    }
+        setShowResult(false);
+    };
     return (
         <HeadlessTippy
             interactive
@@ -51,11 +51,8 @@ setSearchResult([])
                     <PopperWrapper>
                         <h4 className={cx('search-title')}>Accounts</h4>
                         {searchResult.map((result) => (
-                            <AccountItem key ={result.id} data= {result} />
-
+                            <AccountItem key={result.id} data={result} />
                         ))}
-                       
-                       
                     </PopperWrapper>
                 </div>
             )}
@@ -68,7 +65,7 @@ setSearchResult([])
                     placeholder="Search accounts and videos"
                     spellCheck={false}
                     onChange={(e) => setSearchValue(e.target.value)}
-                    onFocus= {() => setShowResult(true)}
+                    onFocus={() => setShowResult(true)}
                 />
                 {!!searchValue && !loading && (
                     <button
@@ -82,7 +79,7 @@ setSearchResult([])
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                 )}
-                { loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
                 <button className={cx('search-btn')}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
