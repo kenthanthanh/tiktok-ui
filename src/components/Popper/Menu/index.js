@@ -33,7 +33,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange }) {
     };
     return (
         <Tippy
-        //   visible
+            //   visible
             interactive
             hideOnClick={hideOnClick}
             delay={[0, 600]}
@@ -48,11 +48,8 @@ function Menu({ children, items = [], hideOnClick = false, onChange }) {
                                 onBack={() => setHistory((prev) => prev.slice(0, prev.length - 1))}
                             />
                         )}
-
-<div className = {cx('menu-body')}>
-                            {renderItems()}
-    
-</div>                    </PopperWrapper>
+                        <div className={cx('menu-body')}>{renderItems()}</div>{' '}
+                    </PopperWrapper>
                 </div>
             )}
             // Out level menu when back hover
