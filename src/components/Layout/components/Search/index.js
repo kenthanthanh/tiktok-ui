@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDebounce } from '~/components/hooks';
-
+import axios from 'axios';
+import request from '~/utils/request';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +22,6 @@ function Search() {
 
     const inputRef = useRef();
 
-
     useEffect(() => {
         // Call API
         if (!debounce.trim()) {
@@ -29,18 +29,41 @@ function Search() {
             return;
         }
         setLoading(true);
-
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounce)}&type=less`)
-            .then((res) => res.json())
+        //  Use Axios to call API
+        // clearly
+        // easy to understand
+        request
+            .get('users/search', {
+                params: {
+                    q: debounce,
+                    type: 'less',
+                },
+            })
             .then((res) => {
-                setSearchResult(res.data);
+                // console.log(res)
+                setSearchResult(res.data.data);
                 setLoading(false);
             })
             .catch(() => setLoading(false));
+
+        //  Use Fetch to call API
+        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounce)}&type=less`)
+        //     .then((res) => res.json())
+        //     .then((res) => {
+        //         setSearchResult(res.data);
+        //         setLoading(false);
+        //     })
+        //     .catch(() => setLoading(false));
     }, [debounce]);
 
     const handleHideResult = () => {
         setShowResult(false);
+    };
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchValue(e.target.value);
+        }
     };
     return (
         <HeadlessTippy
@@ -64,7 +87,7 @@ function Search() {
                     value={searchValue}
                     placeholder="Search accounts and videos"
                     spellCheck={false}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
                 {!!searchValue && !loading && (

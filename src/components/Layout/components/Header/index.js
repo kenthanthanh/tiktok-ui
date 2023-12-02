@@ -15,6 +15,9 @@ import {
     faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
+import routesConfig from '~/components/config/routes';
+import { Link } from 'react-router-dom';
+
 
 
 import Button from '~/components/Button';
@@ -42,6 +45,7 @@ const MENU_ITEMS = [
                     code: 'vi',
                     title: 'Tiếng Việt',
                 },
+               
             ],
         },
     },
@@ -107,7 +111,7 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <img src={images.logo} alt="Tiktok" />
+             <Link to={routesConfig.home} className = {cx('logo-link')}>   <img  src={images.logo} alt="Tiktok" /></Link>
 
              {/*Search In Here*/}
              <Search/>

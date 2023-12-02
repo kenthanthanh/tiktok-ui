@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, items = [], onChange }) {
+function Menu({ children, items = [], hideOnClick = false, onChange }) {
     const [history, setHistory] = useState([{ data: items }]);
     const current = history[history.length - 1];
     const renderItems = () => {
@@ -33,10 +33,11 @@ function Menu({ children, items = [], onChange }) {
     };
     return (
         <Tippy
+        //   visible
             interactive
-            // visible
+            hideOnClick={hideOnClick}
             delay={[0, 600]}
-            offset= {[12,8]}
+            offset={[12, 8]}
             placement="bottom-end"
             render={(attrs) => (
                 <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
@@ -48,12 +49,14 @@ function Menu({ children, items = [], onChange }) {
                             />
                         )}
 
-                        {renderItems()}
-                    </PopperWrapper>
+<div className = {cx('menu-body')}>
+                            {renderItems()}
+    
+</div>                    </PopperWrapper>
                 </div>
             )}
             // Out level menu when back hover
-            onHide = {() => setHistory(prev => prev.slice(0,1))}
+            onHide={() => setHistory((prev) => prev.slice(0, 1))}
         >
             {children}
         </Tippy>
