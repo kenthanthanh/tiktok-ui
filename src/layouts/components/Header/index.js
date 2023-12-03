@@ -108,7 +108,6 @@ function Header() {
                     {' '}
                     <img src={images.logo} alt="Tiktok" />
                 </Link>
-
                 {/*Search In Here*/}
                 <Search />
 
