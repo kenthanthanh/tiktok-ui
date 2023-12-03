@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const request = axios.create({
+const httpRequest = axios.create({
     baseURL: 'https://tiktok.fullstack.edu.vn/api/'
 })
-export default request;
+export default httpRequest;
